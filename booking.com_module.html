@@ -1,0 +1,214 @@
+<!doctype html>
+
+<html>
+
+  <head>
+    <title>1865 Booking.com Form</title>
+    <meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script type="text/javascript">
+	$(function() {
+		var now = new Date();
+		
+		$('#checkin_day option[value=' + now.getDate() + '] ').attr('selected','selected');
+		$('#checkout_monthday option[value=' + now.getDate() + '] ').attr('selected','selected');
+		var thismonth = now.getMonth() + 1;
+		$('#checkin_year_month option[value=' + now.getFullYear() + '-' + thismonth + '] ').attr('selected','selected');
+		$('#checkout_year_month option[value=' + now.getFullYear() + '-' + thismonth + '] ').attr('selected','selected');
+
+	});
+    function update_date() {
+		var k = $('#checkin_year_month').val();
+		$('#checkout_year_month').val(k)
+		var slices = k.split("-");
+		
+		var dayNames = new Array("Dom","Lun","Mar","Mer","Gio","Ven","Sab");
+		var gg = giorniNelMese(slices[0],slices[1]);
+		mese_giusto = parseInt(slices[1])-1;
+		var when = new Date(slices[0],mese_giusto,01);
+		var start_day = when.getDay(slices[0],mese_giusto,01);
+		var u = start_day;
+		for (i=0; i<gg; i++) { 
+			i2 = i+1;
+			$('#checkin_day option[value=' + i2 + '] ').text(dayNames[u] + ' ' + i2);
+			$('#checkout_monthday option[value=' + i2 + '] ').text(dayNames[u] + ' ' + i2);
+			u = u+1;
+			if(u == 7) u = 0;
+		}
+	}
+	function update_date2() {
+		var k = $('#checkout_year_month').val();
+		var slices = k.split("-");
+		var dayNames = new Array("Dom","Lun","Mar","Mer","Gio","Ven","Sab");
+		var gg = giorniNelMese(slices[0],slices[1]);
+		mese_giusto = parseInt(slices[1])-1;
+		var when = new Date(slices[0],mese_giusto,01);
+		var start_day = when.getDay(slices[0],mese_giusto,01);
+		var u = start_day;
+		for (i=0; i<gg; i++) { 
+			i2 = i+1;
+			$('#checkout_monthday option[value=' + i2 + '] ').text(dayNames[u] + ' ' + i2);
+			u = u+1;
+			if(u == 7) u = 0;
+		}
+	}
+	  function update_date3() {
+		var in_m = $('#checkin_year_month').val();
+		var out_m = $('#checkout_year_month').val();
+		var in_slices = in_m.split("-");
+		var out_slices = out_m.split("-");
+		if(parseInt($('#checkout_monthday').val())<=parseInt($('#checkin_day').val()) && parseInt(out_slices[1]) == parseInt(in_slices[1])) $('#checkout_monthday').val($('#checkin_day').val());
+		
+	}
+    function check_date() {
+		var in_m = $('#checkin_year_month').val();
+		var out_m = $('#checkout_year_month').val();
+		var in_slices = in_m.split("-");
+		var out_slices = out_m.split("-");
+		if(parseInt(out_slices[0])<parseInt(in_slices[0])) alert("La data del checkout e' precedente a quella del checkin!");
+		else if (parseInt(out_slices[1])<parseInt(in_slices[1])) alert("La data del checkout e' precedente a quella del checkin!");
+		else if (parseInt(out_slices[1]) == parseInt(in_slices[1]) && parseInt($('#checkout_monthday').val())<=parseInt($('#checkin_day').val())) alert("La data del checkout e' precedente o uguale a quella del checkin!");
+		else { 
+			document.forms["prenotazione"].submit();
+		}
+		
+	}
+	function giorniNelMese(year,month) {
+		var m = [31,28,31,30,31,30,31,31,30,31,30,31];
+		if (month != 2) return m[month - 1];
+		if (year%4 != 0) return m[1];
+		if (year%100 == 0 && year%400 != 0) return m[1];
+		return m[1] + 1;
+	}
+    </script>
+  </head>
+
+  <body>
+
+    <form id="prenotazione" action="http://www.booking.com/hotel/it/residenzadepoca.html" method="get">
+    <input type="hidden" name="tab" value="1">
+    <input type="hidden" name="error_url" value="http://www.booking.com/hotel/it/residenzadepoca.it.html?aid=330843;sid=2a336a326de6e75875a061d8bb0e671c;dcid=1;">
+    <input type="hidden" name="do_availability_check" value="on">
+    <input type="hidden" name="aid" value="330843">
+    <input type="hidden" name="dcid" value="1">
+    <input type="hidden" name="sid" value="2a336a326de6e75875a061d8bb0e671c">
+    <p>Le tue date:</p>
+    
+    <h4>Data di arrivo</h4>
+    
+    <select id="checkin_day" name="checkin_monthday" onChange="update_date3();">&nbsp;
+    <option value="1">Dom 1</option>
+    <option value="2">Lun 2</option>
+    <option value="3">Mar 3</option>
+    <option value="4">Mer 4</option>
+    <option value="5">Gio 5</option>
+    <option value="6">Ven 6</option>
+    <option value="7">Sab 7</option>
+    <option value="8">Dom 8</option>
+    <option value="9">Lun 9</option>
+    <option value="10">Mar 10</option>
+    <option value="11">Mer 11</option>
+    <option value="12">Gio 12</option>
+    <option value="13">Ven 13</option>
+    <option value="14">Sab 14</option>
+    <option value="15">Dom 15</option>
+    <option value="16">Lun 16</option>
+    <option value="17">Mar 17</option>
+    <option value="18">Mer 18</option>
+    <option value="19">Gio 19</option>
+    <option value="20">Ven 20</option>
+    <option value="21">Sab 21</option>
+    <option value="22">Dom 22</option>
+    <option value="23">Lun 23</option>
+    <option value="24">Mar 24</option>
+    <option value="25">Mer 25</option>
+    <option value="26">Gio 26</option>
+    <option value="27">Ven 27</option>
+    <option value="28">Sab 28</option>
+    <option value="29">Dom 29</option>
+    <option value="30">Lun 30</option>
+    <option value="31">Mar 31</option>
+    
+    </select>
+    
+    <select id="checkin_year_month" name="checkin_year_month" onchange="update_date();">
+    
+    <option class="month prompt" selected="selected" value="0">
+    Mese
+    </option>
+    <option class="b_months" value="2011-11">Novembre '11</option>
+    <option class="b_months" value="2011-12">Dicembre '11</option>
+    <option class="b_months" value="2012-1">Gennaio '12</option>
+    <option class="b_months" value="2012-2">Febbraio '12</option>
+    <option class="b_months" value="2012-3">Marzo '12</option>
+    <option class="b_months" value="2012-4">Aprile '12</option>
+    <option class="b_months" value="2012-5">Maggio '12</option>
+    <option class="b_months" value="2012-6">Giugno '12</option>
+    <option class="b_months" value="2012-7">Luglio '12</option>
+    <option class="b_months" value="2012-8">Agosto '12</option>
+    <option class="b_months" value="2012-9">Settembre '12</option>
+    <option class="b_months" value="2012-10">Ottobre '12</option>
+    </select>
+    </div>
+    <h4>Data di partenza</h4>
+    <select id="checkout_monthday" name="checkout_monthday">
+    <option value="1">Dom 1</option>
+    <option value="2">Lun 2</option>
+    <option value="3">Mar 3</option>
+    <option value="4">Mer 4</option>
+    <option value="5">Gio 5</option>
+    <option value="6">Ven 6</option>
+    <option value="7">Sab 7</option>
+    <option value="8">Dom 8</option>
+    <option value="9">Lun 9</option>
+    <option value="10">Mar 10</option>
+    <option value="11">Mer 11</option>
+    <option value="12">Gio 12</option>
+    <option value="13">Ven 13</option>
+    <option value="14">Sab 14</option>
+    <option value="15">Dom 15</option>
+    <option value="16">Lun 16</option>
+    <option value="17">Mar 17</option>
+    <option value="18">Mer 18</option>
+    <option value="19">Gio 19</option>
+    <option value="20">Ven 20</option>
+    <option value="21">Sab 21</option>
+    <option value="22">Dom 22</option>
+    <option value="23">Lun 23</option>
+    <option value="24">Mar 24</option>
+    <option value="25">Mer 25</option>
+    <option value="26">Gio 26</option>
+    <option value="27">Ven 27</option>
+    <option value="28">Sab 28</option>
+    <option value="29">Dom 29</option>
+    <option value="30">Lun 30</option>
+    <option value="31">Mar 31</option>
+    </select>
+    
+    <select id="checkout_year_month" name="checkout_year_month" onchange="update_date2();">
+    
+    <option class="month prompt" selected="selected" value="0">
+    Mese
+    </option>
+    
+    <option class="b_months" value="2011-11">Novembre '11</option>
+    <option class="b_months" value="2011-12">Dicembre '11</option>
+    <option class="b_months" value="2012-1">Gennaio '12</option>
+    <option class="b_months" value="2012-2">Febbraio '12</option>
+    <option class="b_months" value="2012-3">Marzo '12</option>
+    <option class="b_months" value="2012-4">Aprile '12</option>
+    <option class="b_months" value="2012-5">Maggio '12</option>
+    <option class="b_months" value="2012-6">Giugno '12</option>
+    <option class="b_months" value="2012-7">Luglio '12</option>
+    <option class="b_months" value="2012-8">Agosto '12</option>
+    <option class="b_months" value="2012-9">Settembre '12</option>
+    <option class="b_months" value="2012-10">Ottobre '12</option>
+    
+    </select>
+    
+    <input type="button" onClick="check_date();" value="Verifica disponibilità »">
+     
+    </form>
+  </body>
+
+</html>
