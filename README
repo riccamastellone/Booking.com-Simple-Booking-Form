@@ -1,0 +1,8 @@
+This is a VERY SIMPLE HTML and JavaScript form you may implement on your page to allow your clients to book via your booking.com page.
+
+It is easier to style than the official Booking.com module.
+
+www.rmdesign.it
+
+TODO
+Ajax requests to check if no rooms available for that date?
