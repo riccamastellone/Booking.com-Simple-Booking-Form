@@ -15,6 +15,8 @@
 		var thismonth = now.getMonth() + 1;
 		$('#checkin_year_month option[value=' + now.getFullYear() + '-' + thismonth + '] ').attr('selected','selected');
 		$('#checkout_year_month option[value=' + now.getFullYear() + '-' + thismonth + '] ').attr('selected','selected');
+		update_date();
+		update_date2();
 
 	});
     function update_date() {
@@ -80,6 +82,21 @@
 		if (year%100 == 0 && year%400 != 0) return m[1];
 		return m[1] + 1;
 	}
+	function echo_months() {
+		var now = new Date();
+		var thismonth = parseInt(now.getMonth());
+		var thisyear = parseInt(now.getFullYear());
+		var monthNames = new Array("Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre");
+		$('#checkin_year_month option[value=' + now.getFullYear() + '-' + thismonth + '] ').attr('selected','selected');
+		$('#checkout_year_month option[value=' + now.getFullYear() + '-' + thismonth + '] ').attr('selected','selected');
+		
+    for (i=0;i<12;i++) {
+		month2 = thismonth+1;
+		document.write("<option value=\"" + thisyear + '-' + month2 + "\">" + monthNames[thismonth] + " " + thisyear + "</option>");
+		thismonth = thismonth + 1;
+		if(thismonth == 12) {thisyear = thisyear+1;thismonth=0;}
+	}
+	}
     </script>
   </head>
 
@@ -131,23 +148,14 @@
     
     </select>
     
-    <select id="checkin_year_month" name="checkin_year_month" onchange="update_date();">
+    <select id="checkin_year_month" name="checkin_year_month" onChange="update_date();">
     
     <option class="month prompt" selected="selected" value="0">
     Mese
     </option>
-    <option class="b_months" value="2011-11">Novembre '11</option>
-    <option class="b_months" value="2011-12">Dicembre '11</option>
-    <option class="b_months" value="2012-1">Gennaio '12</option>
-    <option class="b_months" value="2012-2">Febbraio '12</option>
-    <option class="b_months" value="2012-3">Marzo '12</option>
-    <option class="b_months" value="2012-4">Aprile '12</option>
-    <option class="b_months" value="2012-5">Maggio '12</option>
-    <option class="b_months" value="2012-6">Giugno '12</option>
-    <option class="b_months" value="2012-7">Luglio '12</option>
-    <option class="b_months" value="2012-8">Agosto '12</option>
-    <option class="b_months" value="2012-9">Settembre '12</option>
-    <option class="b_months" value="2012-10">Ottobre '12</option>
+    <script type="text/javascript">
+		echo_months();
+    </script>
     </select>
     </div>
     <h4>Data di partenza</h4>
@@ -185,24 +193,15 @@
     <option value="31">Mar 31</option>
     </select>
     
-    <select id="checkout_year_month" name="checkout_year_month" onchange="update_date2();">
+    <select id="checkout_year_month" name="checkout_year_month" onChange="update_date2();">
     
     <option class="month prompt" selected="selected" value="0">
     Mese
     </option>
     
-    <option class="b_months" value="2011-11">Novembre '11</option>
-    <option class="b_months" value="2011-12">Dicembre '11</option>
-    <option class="b_months" value="2012-1">Gennaio '12</option>
-    <option class="b_months" value="2012-2">Febbraio '12</option>
-    <option class="b_months" value="2012-3">Marzo '12</option>
-    <option class="b_months" value="2012-4">Aprile '12</option>
-    <option class="b_months" value="2012-5">Maggio '12</option>
-    <option class="b_months" value="2012-6">Giugno '12</option>
-    <option class="b_months" value="2012-7">Luglio '12</option>
-    <option class="b_months" value="2012-8">Agosto '12</option>
-    <option class="b_months" value="2012-9">Settembre '12</option>
-    <option class="b_months" value="2012-10">Ottobre '12</option>
+    <script type="text/javascript">
+		echo_months();
+    </script>
     
     </select>
     
